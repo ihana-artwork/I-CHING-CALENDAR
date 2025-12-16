@@ -67,23 +67,23 @@ export default function App() {
             <P5Background upper={gua.upper} lower={gua.lower} />
 
             {/* 頂部導航 */}
-            <nav className="relative z-20 p-6 flex justify-between items-center bg-gradient-to-b from-white/20 to-transparent">
-                <div className="flex items-center gap-3 cursor-pointer group" onClick={() => {
+            <nav className="relative z-20 p-4 sm:p-6 flex justify-between items-center bg-gradient-to-b from-white/20 to-transparent">
+                <div className="flex items-center gap-2 sm:gap-3 cursor-pointer group" onClick={() => {
                     setView('calendar');
                     setMasterMode(false);
                     setCurrentDate(new Date());
                 }}>
-                    <div className="bg-white/40 p-2.5 rounded-full backdrop-blur-md shadow-sm border border-white/50 group-hover:bg-white/60 transition-all">
-                        <Compass className="w-5 h-5 text-slate-700" />
+                    <div className="bg-white/40 p-2 sm:p-2.5 rounded-full backdrop-blur-md shadow-sm border border-white/50 group-hover:bg-white/60 transition-all">
+                        <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="font-serif text-lg tracking-widest text-slate-800">孟喜卦氣</span>
-                        <span className="text-[10px] text-slate-500 tracking-wider uppercase">Generative Calendar</span>
+                        <span className="font-serif text-base sm:text-lg tracking-widest text-slate-800">孟喜卦氣</span>
+                        <span className="text-[9px] sm:text-[10px] text-slate-500 tracking-wider uppercase hidden sm:block">Generative Calendar</span>
                         <a
                             href="https://www.facebook.com/groups/happyihana"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[10px] text-slate-400/80 hover:text-amber-600/80 transition-colors mt-0.5 tracking-wider font-light no-underline z-50"
+                            className="text-[9px] sm:text-[10px] text-slate-400/80 hover:text-amber-600/80 transition-colors mt-0.5 tracking-wider font-light no-underline z-50"
                             onClick={(e) => e.stopPropagation()}
                         >
                             © 純在喜悅祝福圈
@@ -91,50 +91,54 @@ export default function App() {
                     </div>
                 </div>
 
-                {view === 'calendar' ? (
-                    <div className="flex items-center gap-4 bg-white/40 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/40 shadow-sm transition-all duration-500">
-                        {/* 如果是主卦模式，隱藏前後切換與日期，只顯示標題 */}
-                        {!masterMode ? (
-                            <>
-                                <button onClick={() => handleDateChange(-7)} className="hover:bg-white/50 p-1.5 rounded-full transition-colors text-slate-600">
-                                    <ChevronLeft className="w-5 h-5" />
-                                </button>
-                                <div className="flex flex-col items-center min-w-[110px]">
-                                    <span className="text-sm font-medium text-slate-800 tracking-wide font-serif">
-                                        {currentDate.getFullYear()} / {currentDate.getMonth() + 1} / {currentDate.getDate()}
-                                    </span>
-                                    <div className="flex items-center gap-1.5">
-                                        <span className="text-[10px] text-slate-500 font-medium">
-                                            {formatDate(gua.startDate)} - {formatDate(gua.endDate)}
+                <div className="flex items-center gap-2 sm:gap-4">
+                    {view === 'calendar' && (
+                        <div className="hidden sm:flex items-center gap-4 bg-white/40 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/40 shadow-sm transition-all duration-500">
+                            {/* 如果是主卦模式，隱藏前後切換與日期，只顯示標題 */}
+                            {!masterMode ? (
+                                <>
+                                    <button onClick={() => handleDateChange(-7)} className="hover:bg-white/50 p-1.5 rounded-full transition-colors text-slate-600">
+                                        <ChevronLeft className="w-5 h-5" />
+                                    </button>
+                                    <div className="flex flex-col items-center min-w-[110px]">
+                                        <span className="text-sm font-medium text-slate-800 tracking-wide font-serif">
+                                            {currentDate.getFullYear()} / {currentDate.getMonth() + 1} / {currentDate.getDate()}
                                         </span>
-                                        <span className="text-[10px] bg-amber-100/80 text-amber-700 px-1.5 py-0.5 rounded-full font-bold">
-                                            {gua.solarTerm}
-                                        </span>
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="text-[10px] text-slate-500 font-medium">
+                                                {formatDate(gua.startDate)} - {formatDate(gua.endDate)}
+                                            </span>
+                                            <span className="text-[10px] bg-amber-100/80 text-amber-700 px-1.5 py-0.5 rounded-full font-bold">
+                                                {gua.solarTerm}
+                                            </span>
+                                        </div>
                                     </div>
+                                    <button onClick={() => handleDateChange(7)} className="hover:bg-white/50 p-1.5 rounded-full transition-colors text-slate-600">
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+                                </>
+                            ) : (
+                                <div className="flex items-center gap-2 px-4">
+                                    <Leaf className="w-4 h-4 text-emerald-600" />
+                                    <span className="text-sm font-serif text-slate-700 tracking-wider">季節主宰 • {gua.name}</span>
                                 </div>
-                                <button onClick={() => handleDateChange(7)} className="hover:bg-white/50 p-1.5 rounded-full transition-colors text-slate-600">
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
-                            </>
-                        ) : (
-                            <div className="flex items-center gap-2 px-4">
-                                <Leaf className="w-4 h-4 text-emerald-600" />
-                                <span className="text-sm font-serif text-slate-700 tracking-wider">季節主宰 • {gua.name}</span>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <div className="px-5 py-2.5">
-                        <span className="text-sm font-serif text-slate-600 italic">Select a hexagram to view details</span>
-                    </div>
-                )}
+                            )}
+                        </div>
+                    )}
 
-                <button
-                    onClick={() => setView(view === 'calendar' ? 'overview' : 'calendar')}
-                    className="flex items-center gap-2 bg-white/40 px-4 py-2.5 rounded-full backdrop-blur-md border border-white/40 shadow-sm hover:bg-white/60 transition-all text-slate-700 text-sm font-medium"
-                >
-                    {view === 'calendar' ? <><Grid className="w-4 h-4" /> 總覽</> : <><Layout className="w-4 h-4" /> 曆法</>}
-                </button>
+                    {view === 'overview' && (
+                        <div className="hidden sm:block px-5 py-2.5">
+                            <span className="text-sm font-serif text-slate-600 italic">Select a hexagram to view details</span>
+                        </div>
+                    )}
+
+                    <button
+                        onClick={() => setView(view === 'calendar' ? 'overview' : 'calendar')}
+                        className="flex items-center gap-2 bg-white/40 px-3 py-2 sm:px-4 sm:py-2.5 rounded-full backdrop-blur-md border border-white/40 shadow-sm hover:bg-white/60 transition-all text-slate-700 text-xs sm:text-sm font-medium"
+                    >
+                        {view === 'calendar' ? <><Grid className="w-4 h-4 sm:w-4 sm:h-4" /> <span>總覽</span></> : <><Layout className="w-4 h-4 sm:w-4 sm:h-4" /> <span>曆法</span></>}
+                    </button>
+                </div>
             </nav>
 
             {/* 主要內容區 */}
